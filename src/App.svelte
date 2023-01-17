@@ -1,6 +1,7 @@
 <script lang="ts">
   import svelteLogo from "./assets/svelte.svg";
   import Nested from "./components/Nested.svelte";
+  import Info from "./components/Info.svelte";
 
   const name = "Svelte";
   const stringHTML = "this string contains some <strong>HTML!!!</strong>";
@@ -28,6 +29,19 @@
     numbers = numbers;
   }
   $: sum = numbers.reduce((t, n) => t + n, 0);
+
+  let user = { loggedIn: false };
+
+  function toggle() {
+    user.loggedIn = !user.loggedIn;
+  }
+
+  const pkg = {
+    name: "svelte",
+    version: 3,
+    speed: "blazing",
+    website: "https://svelte.dev",
+  };
 </script>
 
 <main>
@@ -64,6 +78,7 @@
         </li>
       </ol>
     </li>
+
     <li>
       <h2>Reactivity</h2>
       <ol>
@@ -97,6 +112,24 @@
           <h3>Updating arrays and objects</h3>
           <p>{numbers.join(" + ")} = {sum}</p>
           <button on:click={addNumber}> Add a number </button>
+        </li>
+      </ol>
+    </li>
+
+    <li>
+      <h2>Props</h2>
+      <ol>
+        <li>
+          <h3>Declaring props</h3>
+          <Nested answer={42} />
+        </li>
+        <li>
+          <h3>Default values</h3>
+          <Nested />
+        </li>
+        <li>
+          <h3>Spread props</h3>
+          <Info {...pkg} />
         </li>
       </ol>
     </li>
