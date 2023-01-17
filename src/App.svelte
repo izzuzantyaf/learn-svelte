@@ -47,7 +47,6 @@
         </li>
         <li>
           <h3>Dynamic attributes</h3>
-          <img src="./src/assets/svelte.svg" alt="Svelte logo" />
           <img src={svelteLogo} alt="Svelte logo" />
         </li>
         <li>
