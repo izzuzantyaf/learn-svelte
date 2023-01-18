@@ -42,6 +42,32 @@
     speed: "blazing",
     website: "https://svelte.dev",
   };
+
+  let x = 7;
+
+  let cats = [
+    { id: "J---aiyznGQ", name: "Keyboard Cat" },
+    { id: "z_AbfPXTKms", name: "Maru" },
+    { id: "OUtn3pvWmpg", name: "Henri The Existential Cat" },
+  ];
+
+  async function getRandomNumber() {
+    return new Promise((resolve, reject) => {
+      const number = Math.random();
+      if (number > 0.5) resolve(number);
+      else reject("error occured!");
+    });
+  }
+
+  let promise = getRandomNumber()
+    .then(res => res)
+    .catch(err => err);
+
+  function handleClick() {
+    promise = getRandomNumber()
+      .then(res => res)
+      .catch(err => err);
+  }
 </script>
 
 <main>
@@ -130,6 +156,66 @@
         <li>
           <h3>Spread props</h3>
           <Info {...pkg} />
+        </li>
+      </ol>
+    </li>
+
+    <li>
+      <h2>Logic</h2>
+      <ol>
+        <li>
+          <h3>If blocks</h3>
+          {#if user.loggedIn}
+            <button on:click={toggle}> Log out </button>
+          {/if}
+          {#if !user.loggedIn}
+            <button on:click={toggle}> Log in </button>
+          {/if}
+        </li>
+        <li>
+          <h3>Else blocks</h3>
+          {#if user.loggedIn}
+            <button on:click={toggle}> Log out </button>
+          {:else}
+            <button on:click={toggle}> Log in </button>
+          {/if}
+        </li>
+        <li>
+          <h3>Else-if blocks</h3>
+          {#if x > 10}
+            <p>{x} is greater than 10</p>
+          {:else if x > 5}
+            <p>{x} is between 5 and 10</p>
+          {:else}
+            <p>{x} is less than 5</p>
+          {/if}
+        </li>
+        <li>
+          <h3>Each blocks</h3>
+          <ul>
+            {#each cats as cat}
+              <li>
+                <a
+                  target="_blank"
+                  href="https://www.youtube.com/watch?v={cat.id}"
+                  rel="noreferrer"
+                >
+                  {cat.name}
+                </a>
+              </li>
+            {/each}
+          </ul>
+        </li>
+        <li>
+          <h3>Await blocks</h3>
+          <button on:click={handleClick}> generate random number </button>
+          {#await promise}
+            <p>...waiting</p>
+          {:then number}
+            <p>The number is {number}</p>
+          {:catch error}
+            <p style="color: red">{error}</p>
+          {/await}
         </li>
       </ol>
     </li>
